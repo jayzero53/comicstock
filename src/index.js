@@ -1,29 +1,38 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import Supplier from './Supplier.js';
+import axios from 'axios';
+
+import Supplier from './Supplier.js';
+
+const API_URL = 'http://frontendshowcase.azurewebsites.net/api/';
 
 
-function Supplier(props){
-    return(
-        <div className="supplier">
-            <h2>{props.id}</h2>
-            <h2>{props.name}</h2>
-            <h2>{props.city}</h2>
-            <h2>{props.reference}</h2>
-        </div>
-    );
-}
+class ComicListThing extends Component{
 
-class ComicListThing extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            suppliersList: []
+        };
+    }
 
-    renderSupplier(id, name, city, reference) {
+    componentDidMount(){
 
-        console.log('id: ' + id);
-        console.log('name: ' + name);
-        console.log('city: ' + city);
-        console.log('reference: ' + reference);
-        console.log('\n');
+        axios.get(API_URL + 'Suppliers')
+        .then(
+            (response) => {
+                this.setState({suppliersList: response.data})
+            }
+        )
+        .catch(
+            function (error) {
+                console.log(error);
+            }
+        )
+    }
+
+    static renderSupplier(id, name, city, reference) {
 
         return (
             <Supplier
@@ -36,39 +45,17 @@ class ComicListThing extends React.Component{
     }
 
     render (){
-        console.log('main render');
+        console.log(this.state.suppliersList);
+
         return(
             <div>
                 <div>
                     {
-                        this.renderSupplier(
-                            6,
-                            "Barfropazz Direct Corp.",
-                            "Dayton",
-                            "XY9NY9590GWC0JS",
-                        )
-                    }
-                </div>
-
-                <div>
-                    {
-                        this.renderSupplier(
-                            15,
-                            "Bartanaquazz International ",
-                            "Montgomery",
-                            "JHMIYDGF9EE0F42",
-                        )
-                    }
-                </div>
-
-                <div>
-                    {
-                        this.renderSupplier(
-                            21,
-                            "Cipjubicor Holdings ",
-                            "Stockton",
-                            "RGEILW3BN72K7P4",
-                        )
+                        this.state.suppliersList.map((item, index) => (
+                            ComicListThing.renderSupplier(
+                                item.id,item.name,item.city,item.reference
+                            )
+                        ))
                     }
                 </div>
             </div>
