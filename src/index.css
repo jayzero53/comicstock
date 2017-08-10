@@ -12,3 +12,33 @@ ol, ul {
     border: 2px;
     background-color: cyan;
 }
+
+.issue {
+    font-style: normal;
+    border: 2px;
+    background-color: #ffa869;
+}
+
+.comic_book_thumbnail {
+    width: 256px;
+    height: 256px;
+    max-height: 256px;
+    max-width: 256px;
+}
+
+
+.padded_by_ten{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.rightAligned{
+    text-align: right;
+}
+
+.button_icon{
+    width: 24px;
+    height: 24px;
+    max-height: 24px;
+    max-width: 24px;
+}
