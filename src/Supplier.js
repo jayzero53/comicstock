@@ -9,6 +9,7 @@ import deleteIcon from './static/icons8-Trash Can-40.png'
 function Supplier(props){
     return(
         <div className="supplier">
+            <h2>{props.id}</h2>
             <h2>{props.name}</h2>
             <h2>{props.city}</h2>
             <h2>{props.reference}</h2>
@@ -17,19 +18,19 @@ function Supplier(props){
                     className="padded_by_ten button_icon"
                     src={editIcon}
                     alt="edit"
-                    onClick={() => alert('edit on supplier ' + props.name)}
+                    onClick={() => props.editHandler(props.id)}
                 />
                 <img
                     className="padded_by_ten button_icon"
                     src={saveIcon}
                     alt="save"
-                    onClick={() => alert('save on supplier ' + props.name)}
+                    onClick={() => props.saveHandler(props.id)}
                 />
                 <img
                     className="padded_by_ten button_icon"
                     src={deleteIcon}
                     alt="delete"
-                    onClick={() => alert('delete on supplier ' + props.name)}
+                    onClick={() => props.deleteHandler(props.id)}
                 />
             </div>
         </div>

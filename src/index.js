@@ -98,54 +98,204 @@ class ComicSuppliers extends Component{
     componentDidMount(){
 
         axios.get(API_URL + 'Suppliers')
-            .then(
-                (response) => {
-                    // TODO: Dedupe
-                    this.setState({suppliersList: response.data})
-                }
-            )
-            .catch(
-                function (error) {
-                    console.log(error);
-                }
-            );
+        .then(
+            (response) => {
+                this.setState({suppliersList: response.data})
+            }
+        )
+        .catch(
+            function (error) {
+                console.log(error);
+            }
+        );
     }
 
-    static renderSupplier(id, name, city, reference) {
+    renderSupplier(key, id, name, city, reference, editHandler, saveHandler, deleteHandler) {
         return (
             <Supplier
-                key={id}
+                key={key}
+                id={id}
                 name={name}
                 city={city}
                 reference={reference}
+
+                editHandler={editHandler}
+                saveHandler={saveHandler}
+                deleteHandler={deleteHandler}
             />
         );
+    }
+
+    editSupplier(supplierID){
+        return alert('Editing ' + supplierID)
+    }
+
+    saveSupplier(supplierID){
+        return alert('Saving ' + supplierID)
+    }
+
+    deleteSupplier(supplierID){
+
+        console.log('Deleting: ' + supplierID);
+        let supplierUrl = API_URL + 'Suppliers/'+ supplierID;
+        console.log('url: '+ supplierUrl);
+
+        axios.delete(
+            supplierUrl
+        )
+        .then(
+            (response) => {
+                console.log('response data: '+response.data);
+                this.setState({suppliersList: response.data})
+            }
+        )
+        .catch (
+            function (error) {
+                console.log('error: '+error)
+            }
+        );
+        console.log('Deleted ' + supplierID)
     }
 
     render (){
         return(
             <div>
-            {
-                this.state.suppliersList.map((item, index) => (
-                    ComicSuppliers.renderSupplier(
-                        item.id,item.name,item.city,item.reference
-                    )
-                ))
-            }
-            </div>
 
+                <div>
+                    <Link to={'/suppliers/add'}>Add new</Link>
+                </div>
+
+                <div>
+                {
+                    this.state.suppliersList.map((item, index) => (
+                        this.renderSupplier(
+                            index,
+                            item.id,
+                            item.name,
+                            item.city,
+                            item.reference,
+                            this.editSupplier,
+                            this.saveSupplier,
+                            this.deleteSupplier,
+                        )
+                    ))
+                }
+                </div>
+            </div>
         );
     }
 }
 
+class SupplierForm extends Component{
+    constructor(){
+        super();
+        this.state = {
+            city: '',
+            name: '',
+            reference: '',
+        };
+
+        this.handleCityChange = this.handleCityChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleReferenceChange = this.handleReferenceChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleCityChange(event) {
+        this.setState({
+            city: event.target.value,
+        });
+    }
+
+    handleNameChange(event) {
+        this.setState({
+            name: event.target.value,
+        });
+    }
+
+    handleReferenceChange(event) {
+        this.setState({
+            reference: event.target.value,
+        });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        axios.post(
+            API_URL + 'Suppliers',
+            {
+                city: this.state.city,
+                name: this.state.name,
+                reference: this.state.reference,
+            }
+        )
+        .then(
+            (result) => {
+                console.log(result.data);
+            }
+        )
+        .catch(
+            function (error) {
+                console.log(error);
+            }
+        );
+
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>City</td>
+                            <td>
+                                <label>
+                                    <input type="text" value={this.state.city} onChange={this.handleCityChange} />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Name:
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="text" value={this.state.name} onChange={this.handleNameChange} />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Reference:
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="text" value={this.state.reference} onChange={this.handleReferenceChange} />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="submit" value="Submit" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        );
+    }
+}
 
 // =================================
 
+//<editor-fold desc="My fold area">
 const Main = () => (
     <main>
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/issues' component={Issues}/>
+            <Route path='/suppliers/add' component={SuppliersAdd}/>
             <Route path='/suppliers' component={Suppliers}/>
         </Switch>
     </main>
@@ -166,6 +316,12 @@ const Issues = () => (
 const Suppliers = () => (
     <Switch>
         <Route exact path='/suppliers' component={ComicSuppliers}/>
+    </Switch>
+);
+
+const SuppliersAdd = () => (
+    <Switch>
+        <Route exact path='/suppliers/add' component={SupplierForm}/>
     </Switch>
 );
 
@@ -193,3 +349,5 @@ render((
         <App />
     </BrowserRouter>
 ), document.getElementById('root'));
+
+//</editor-fold>
