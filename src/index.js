@@ -8,6 +8,8 @@ import { Switch, Route } from 'react-router-dom'
 
 import Supplier from './Supplier.jsx';
 import Issue from './Issue.jsx';
+import Redirect from "react-router-dom/es/Redirect";
+import getSuppliers from "./ApiTools";
 
 const API_URL = 'http://frontendshowcase.azurewebsites.net/api/';
 
@@ -131,6 +133,9 @@ class ComicSuppliers extends Component{
 
     editSupplier(supplierID){
         console.log('Editing: '+supplierID);
+        let editURL = "/suppliers/edit/" + supplierID;
+        console.log(editURL);
+        return <Redirect push to={editURL}/>;
         // TODO: Force redirect to /suppliers/edit/{supplierID}
     }
 
@@ -139,7 +144,6 @@ class ComicSuppliers extends Component{
     }
 
     deleteSupplier(supplierID){
-
         axios.delete(
             API_URL + 'Suppliers/'+ supplierID
         )
@@ -186,6 +190,7 @@ class SupplierForm extends Component{
             city: '',
             name: '',
             reference: '',
+            editComplete: false
         };
 
         this.handleCityChange = this.handleCityChange.bind(this);
@@ -232,12 +237,19 @@ class SupplierForm extends Component{
                 console.log(error);
             }
         );
+        this.setState(
+            {editComplete: true,}
+        )
+
     }
 
-    render() {
-        console.log('In render');
-        console.log(this.state);
 
+    render() {
+
+        if (this.state.editComplete){
+            getSuppliers();
+            return <Redirect to='/suppliers'/>;
+        }
         return (
             <form onSubmit={this.handleSubmit}>
                 <table>
@@ -301,7 +313,8 @@ class SupplierFormEdit extends SupplierForm{
                     id: id,
                     city: response.data.city,
                     name: response.data.name,
-                    reference: response.data.reference
+                    reference: response.data.reference,
+                    editComplete: false,
                 };
             this.forceUpdate()
             }
@@ -315,6 +328,7 @@ class SupplierFormEdit extends SupplierForm{
     }
 
     handleSubmit(event) {
+        console.log('this ID: '+this.state.id);
         event.preventDefault();
         console.log('this ID: '+this.state.id);
         axios.put(
@@ -336,10 +350,21 @@ class SupplierFormEdit extends SupplierForm{
                 console.log(error);
             }
         );
+        this.setState(
+            {editComplete: true,}
+        )
+
     }
 
     render() {
+        if (this.state.editComplete){
+            getSuppliers();
+            return <Redirect to='/suppliers'/>;
+        }
+
         return (
+
+
             <form onSubmit={this.handleSubmit}>
                 <table>
                     <tbody>
@@ -372,9 +397,6 @@ class SupplierFormEdit extends SupplierForm{
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <input type="cancel" value="Cancel" />
-                        </td>
                         <td>
                             <input type="submit" value="Submit" />
                         </td>
