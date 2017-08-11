@@ -6,8 +6,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { Switch, Route } from 'react-router-dom'
 
-import Supplier from './Supplier.js';
-import Issue from './Issue.js';
+import Supplier from './Supplier.jsx';
+import Issue from './Issue.jsx';
 
 const API_URL = 'http://frontendshowcase.azurewebsites.net/api/';
 
@@ -95,8 +95,7 @@ class ComicSuppliers extends Component{
         };
     }
 
-    componentDidMount(){
-
+    getSuppliers(){
         axios.get(API_URL + 'Suppliers')
         .then(
             (response) => {
@@ -110,6 +109,10 @@ class ComicSuppliers extends Component{
         );
     }
 
+    componentDidMount(){
+        this.getSuppliers()
+    }
+
     renderSupplier(key, id, name, city, reference, editHandler, saveHandler, deleteHandler) {
         return (
             <Supplier
@@ -119,15 +122,16 @@ class ComicSuppliers extends Component{
                 city={city}
                 reference={reference}
 
-                editHandler={editHandler}
-                saveHandler={saveHandler}
-                deleteHandler={deleteHandler}
+                editHandler={editHandler.bind(this)}
+                saveHandler={saveHandler.bind(this)}
+                deleteHandler={deleteHandler.bind(this)}
             />
         );
     }
 
     editSupplier(supplierID){
-        return alert('Editing ' + supplierID)
+        console.log('Editing: '+supplierID);
+        // TODO: Force redirect to /suppliers/edit/{supplierID}
     }
 
     saveSupplier(supplierID){
@@ -136,35 +140,24 @@ class ComicSuppliers extends Component{
 
     deleteSupplier(supplierID){
 
-        console.log('Deleting: ' + supplierID);
-        let supplierUrl = API_URL + 'Suppliers/'+ supplierID;
-        console.log('url: '+ supplierUrl);
-
         axios.delete(
-            supplierUrl
+            API_URL + 'Suppliers/'+ supplierID
         )
-        .then(
-            (response) => {
-                console.log('response data: '+response.data);
-                this.setState({suppliersList: response.data})
-            }
+        .then( () => { this.getSuppliers() }
         )
         .catch (
             function (error) {
                 console.log('error: '+error)
             }
         );
-        console.log('Deleted ' + supplierID)
     }
 
     render (){
         return(
             <div>
-
                 <div>
                     <Link to={'/suppliers/add'}>Add new</Link>
                 </div>
-
                 <div>
                 {
                     this.state.suppliersList.map((item, index) => (
@@ -239,10 +232,12 @@ class SupplierForm extends Component{
                 console.log(error);
             }
         );
-
     }
 
     render() {
+        console.log('In render');
+        console.log(this.state);
+
         return (
             <form onSubmit={this.handleSubmit}>
                 <table>
@@ -251,7 +246,7 @@ class SupplierForm extends Component{
                             <td>City</td>
                             <td>
                                 <label>
-                                    <input type="text" value={this.state.city} onChange={this.handleCityChange} />
+                                    <input type="text"  value={this.state.city} onChange={this.handleCityChange} />
                                 </label>
                             </td>
                         </tr>
@@ -287,6 +282,111 @@ class SupplierForm extends Component{
     }
 }
 
+class SupplierFormEdit extends SupplierForm{
+
+    constructor(supplierID){
+        super();
+
+        // TODO: Cleanup
+        const id = supplierID.match.params.id;
+        let requestURL = API_URL + 'Suppliers/' + id;
+
+        axios.get(
+            requestURL
+        )
+        .then(
+            (response) => {
+                console.log(response.data);
+                this.state = {
+                    id: id,
+                    city: response.data.city,
+                    name: response.data.name,
+                    reference: response.data.reference
+                };
+            this.forceUpdate()
+            }
+        )
+        .catch((error) => console.log(error));
+
+        this.handleCityChange = this.handleCityChange.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleReferenceChange = this.handleReferenceChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log('this ID: '+this.state.id);
+        axios.put(
+            API_URL + 'Suppliers',
+            {
+                id: this.state.id,
+                city: this.state.city,
+                name: this.state.name,
+                reference: this.state.reference,
+            }
+        )
+        .then(
+            (result) => {
+                console.log(result.data);
+            }
+        )
+        .catch(
+            function (error) {
+                console.log(error);
+            }
+        );
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>City</td>
+                        <td>
+                            <label>
+                                <input type="text" value={this.state.city} onChange={this.handleCityChange} />
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Name:
+                        </td>
+                        <td>
+                            <label>
+                                <input type="text" value={this.state.name} onChange={this.handleNameChange} />
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Reference:
+                        </td>
+                        <td>
+                            <label>
+                                <input type="text" value={this.state.reference} onChange={this.handleReferenceChange} />
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="cancel" value="Cancel" />
+                        </td>
+                        <td>
+                            <input type="submit" value="Submit" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        );
+    }
+
+}
+
 // =================================
 
 //<editor-fold desc="My fold area">
@@ -295,6 +395,7 @@ const Main = () => (
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/issues' component={Issues}/>
+            <Route path='/suppliers/edit/:id' component={SuppliersEdit}/>
             <Route path='/suppliers/add' component={SuppliersAdd}/>
             <Route path='/suppliers' component={Suppliers}/>
         </Switch>
@@ -322,6 +423,12 @@ const Suppliers = () => (
 const SuppliersAdd = () => (
     <Switch>
         <Route exact path='/suppliers/add' component={SupplierForm}/>
+    </Switch>
+);
+
+const SuppliersEdit = () => (
+    <Switch>
+        <Route path='/suppliers/edit/:id' component={SupplierFormEdit}/>
     </Switch>
 );
 
