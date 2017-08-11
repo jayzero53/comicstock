@@ -3,7 +3,6 @@ Supplier module
 */
 import React from 'react';
 import editIcon from './static/icons8-Edit-40.png'
-import saveIcon from './static/icons8-Save-40.png'
 import deleteIcon from './static/icons8-Trash Can-40.png'
 
 function Supplier(props){
@@ -19,12 +18,6 @@ function Supplier(props){
                     src={editIcon}
                     alt="edit"
                     onClick={() => props.editHandler(props.id)}
-                />
-                <img
-                    className="padded_by_ten button_icon"
-                    src={saveIcon}
-                    alt="save"
-                    onClick={() => props.saveHandler(props.id)}
                 />
                 <img
                     className="padded_by_ten button_icon"

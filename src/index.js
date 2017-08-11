@@ -115,7 +115,7 @@ class ComicSuppliers extends Component{
         this.getSuppliers()
     }
 
-    renderSupplier(key, id, name, city, reference, editHandler, saveHandler, deleteHandler) {
+    renderSupplier(key, id, name, city, reference, editHandler, deleteHandler) {
         return (
             <Supplier
                 key={key}
@@ -125,22 +125,17 @@ class ComicSuppliers extends Component{
                 reference={reference}
 
                 editHandler={editHandler.bind(this)}
-                saveHandler={saveHandler.bind(this)}
                 deleteHandler={deleteHandler.bind(this)}
             />
         );
     }
 
     editSupplier(supplierID){
+        // TODO: Force redirect to /suppliers/edit/{supplierID}
         console.log('Editing: '+supplierID);
         let editURL = "/suppliers/edit/" + supplierID;
         console.log(editURL);
-        return <Redirect push to={editURL}/>;
-        // TODO: Force redirect to /suppliers/edit/{supplierID}
-    }
-
-    saveSupplier(supplierID){
-        return alert('Saving ' + supplierID)
+        // return <Redirect push to={editURL}/>;  // Doesnt work
     }
 
     deleteSupplier(supplierID){
@@ -172,7 +167,6 @@ class ComicSuppliers extends Component{
                             item.city,
                             item.reference,
                             this.editSupplier,
-                            this.saveSupplier,
                             this.deleteSupplier,
                         )
                     ))
