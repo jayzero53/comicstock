@@ -1,16 +1,15 @@
 import React from 'react';
-import './index.css';
 import { render } from 'react-dom'
 import { Link, BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import {
-    APP_HOME, APP_ISSUES_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL,
-    APP_SUPPLIERS_URL
-} from "./constants";
-
+import './index.css';
 import ComicSuppliers from './ComicSuppliers'
 import ComicIssues from './ComicIssues'
-import {SupplierForm, SupplierFormEdit} from "./forms";
+import {SupplierAddForm, SupplierEditForm} from "./forms";
+import {
+    APP_HOME, APP_ISSUES_URL, APP_SUPPLIERS_ADD_URL,
+    APP_SUPPLIERS_EDIT_URL, APP_SUPPLIERS_URL
+} from "./constants";
 
 //<editor-fold desc="My fold area">
 const Main = () => (
@@ -45,13 +44,13 @@ const Suppliers = () => (
 
 const SuppliersAdd = () => (
     <Switch>
-        <Route exact path={APP_SUPPLIERS_ADD_URL} component={SupplierForm}/>
+        <Route exact path={APP_SUPPLIERS_ADD_URL} component={SupplierAddForm}/>
     </Switch>
 );
 
 const SuppliersEdit = () => (
     <Switch>
-        <Route path={APP_SUPPLIERS_EDIT_URL + ':id'} component={SupplierFormEdit}/>
+        <Route path={APP_SUPPLIERS_EDIT_URL + ':id'} component={SupplierEditForm}/>
     </Switch>
 );
 
