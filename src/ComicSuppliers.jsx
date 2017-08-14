@@ -23,10 +23,7 @@ class ComicSuppliers extends Component{
     componentDidMount(){
         getSuppliers()
         .then(
-            (suppliers) =>
-                this.setState({
-                    suppliersList: suppliers,
-                })
+            (suppliers) =>this.setState({suppliersList: suppliers})
         )
     }
 
@@ -47,10 +44,6 @@ class ComicSuppliers extends Component{
 
     editSupplier(supplierID){
         // TODO: Use proper site navigation and remove hack
-
-        console.log('Editing: '+supplierID);
-        let editURL = APP_SUPPLIERS_EDIT_URL + supplierID;
-        console.log(editURL);
         this.setState({editSupplierID: supplierID})
     }
 
@@ -86,12 +79,10 @@ class ComicSuppliers extends Component{
             let editURL = APP_SUPPLIERS_EDIT_URL + this.state.editSupplierID;
             // TODO: Remove state transition from render (is anti-pattern)
             this.setState({editSupplierID: null});
-
             return <Redirect to={editURL}/>;
         }
 
         console.log(this.state.searchCharacters);
-
 
         let displayItems = this.state.suppliersList;
         let searchChars = this.state.searchCharacters;
@@ -99,8 +90,8 @@ class ComicSuppliers extends Component{
             displayItems = displayItems.filter(
                 function(supplierInstance){
                     return supplierInstance.city.toLowerCase().indexOf(searchChars.toLowerCase()) !== -1 ||
-                        supplierInstance.name.toLowerCase().indexOf(searchChars.toLowerCase()) !== -1 ||
-                        supplierInstance.reference.toLowerCase().indexOf(searchChars.toLowerCase()) !== -1
+                           supplierInstance.name.toLowerCase().indexOf(searchChars.toLowerCase()) !== -1 ||
+                           supplierInstance.reference.toLowerCase().indexOf(searchChars.toLowerCase()) !== -1
                 }
             );
         }
@@ -111,7 +102,7 @@ class ComicSuppliers extends Component{
                     <Link to={APP_SUPPLIERS_ADD_URL}>Add new</Link>
                 </div>
                 <div className="row">
-                    <input type="text" class="form-control" placeholder={"Search"} onChange={this.handleSearchChange.bind(this)}/>
+                    <input type="text" className="form-control" placeholder={"Search"} onChange={this.handleSearchChange.bind(this)}/>
                 </div>
                 <div className="row">
                     {

@@ -4,6 +4,7 @@ Supplier module
 import React from 'react';
 import editIcon from './static/icons8-Edit-40.png'
 import deleteIcon from './static/icons8-Trash Can-40.png'
+import confirm from './Confirm'
 
 function Supplier(props){
     return(
@@ -26,7 +27,14 @@ function Supplier(props){
                         className="padded_by_ten button_icon"
                         src={deleteIcon}
                         alt="delete"
-                        onClick={() => props.deleteHandler(props.id)}
+                        onClick={() => {
+                            (confirm('Delete this supplier?')
+                            .then(
+                                (proceed) =>{props.deleteHandler(props.id)},
+                                (cancel) =>{ /*do nothing*/}
+
+                            ))
+                        }}
                     />
                 </div>
             </address>
