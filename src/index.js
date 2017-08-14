@@ -57,10 +57,27 @@ const SuppliersEdit = () => (
 const Header = () => (
     <header>
         <nav>
-            <ul>
-                <li><Link to={APP_ISSUES_URL}>Issues</Link></li>
-                <li><Link to={APP_SUPPLIERS_URL}>Suppliers</Link></li>
-            </ul>
+            <div className="row">
+                <div id="green-background" className="col-md-4">
+                    <h2>Issues</h2>
+                    <a href={APP_ISSUES_URL}>
+                        <span/>
+                    </a>
+                </div>
+                <div id="blue-background" className="col-md-4">
+                    <h2>Suppliers</h2>
+                    <a href={APP_SUPPLIERS_URL}>
+                        <span/>
+                    </a>
+                </div>
+                <div id="red-background" className="col-md-4">
+                    <h2>Orders</h2>
+                    <a href={APP_SUPPLIERS_URL}>
+                        <span/>
+                    </a>
+                </div>
+
+            </div>
         </nav>
     </header>
 );

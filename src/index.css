@@ -9,8 +9,31 @@ ol, ul {
 
 .supplier {
     font-style: normal;
-    border: 2px;
     background-color: cyan;
+}
+
+#green-background{
+    background-color: chartreuse;
+}
+
+#green-background:hover{
+    background-color: #09ff39;
+}
+
+#blue-background{
+    background-color: darkcyan;
+}
+
+#blue-background:hover{
+    background-color: cornflowerblue;
+}
+
+a span{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left: 0;
 }
 
 .issue {
@@ -37,8 +60,10 @@ ol, ul {
 }
 
 .button_icon{
-    width: 24px;
-    height: 24px;
-    max-height: 24px;
-    max-width: 24px;
+    width: 64px;
+    height: 40px;
+    /*max-height: 40px;*/
+    /*max-width: 40px;*/
+    max-height: none;
+    max-width: none;
 }
