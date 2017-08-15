@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {API_ISSUES_URL, API_ORDERS_URL, API_SUPPLIERS_URL} from "./constants";
+import {API_ISSUES_URL, API_ORDERS_URL, API_SUPPLIERS_URL} from "./Constants";
 
 function fetchData(url){
     return (

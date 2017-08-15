@@ -46,5 +46,5 @@ Confirmation.propTypes = {
     cancel: PropTypes.func,      // called when cancel button is clicked.
     dismiss: PropTypes.func,     // called when backdrop is clicked or escaped.
     enableEscape: PropTypes.bool,
-}
+};
 export default confirmable(Confirmation);

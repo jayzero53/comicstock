@@ -16,6 +16,7 @@ const APP_SUPPLIERS_EDIT_URL = APP_SUPPLIERS_URL +  'edit/';
 
 const APP_ISSUES_URL = APP_HOME + 'issues/';
 
+const PAGINATION_ITEMS_PER_PAGE = 6;
 
 export  {
     API_BASE_URL,
@@ -30,4 +31,6 @@ export  {
     APP_SUPPLIERS_EDIT_URL,
 
     APP_ISSUES_URL,
+
+    PAGINATION_ITEMS_PER_PAGE,
 };

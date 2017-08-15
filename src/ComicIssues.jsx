@@ -11,7 +11,9 @@ class ComicIssues extends Component{
         super();
         this.state = {
             issuesList: [],
+            selectedIssue: null,
         };
+        // this.onMiniComicClick = this.onMiniComicClick.bind(this)
     }
 
     componentDidMount(){
@@ -23,59 +25,82 @@ class ComicIssues extends Component{
         )
     }
 
-    static renderIssue(
+    returnComicWithID(comicID){
+        for(let i=0; i<this.state.issuesList.length; i++){
+            let comic = this.state.issuesList[i];
+            if (comic.id === comicID){
+                return comic
+            }
+        }
+    }
+
+    onMiniComicClick(comicID) {
+        console.log('comicID');
+        console.log(comicID);
+
+        this.setState({
+            selectedIssue: comicID,
+        });
+
+        let found = this.returnComicWithID(comicID);
+        console.log('found');
+        console.log(found)
+    };
+
+    renderIssue(
         id,
         title,
-        description,
         seriesNumber,
-        publicationDate,
-        publisherId,
         publisher,
-        // creators,
-        // stock,
         thumbnail,
-        // images,
+        clickhandler
     ){
         return (
             <Issue
                 key={id}
-
                 title={title}
-                description={description}
                 seriesNumber={seriesNumber}
-                publicationDate={publicationDate}
-                publisherId={publisherId}
                 publisher={publisher}
-                // creators={creators}
-                // stock={stock}
                 thumbnail={thumbnail}
-                // images={images}
-
-                // onClick={() => this.props.onClick(i)}
+                clickHandler={() => this.onMiniComicClick(id)}
             />
         );
     }
 
     render (){
+
+        let comic, comicRendered;
+
+        if (this.state.selectedIssue){
+            comic = this.returnComicWithID(this.state.selectedIssue);
+            console.log('comic')
+            console.log(comic)
+            comicRendered = this.renderIssue(
+                comic.id,
+                comic.title,
+                comic.seriesNumber,
+                comic.publisher,
+                comic.thumbnail,
+            );
+            }
+
         return(
-            <div>
+            <div className="row">
                 {
                     this.state.issuesList.map((item, index) => (
-                        ComicIssues.renderIssue(
+                        this.renderIssue(
                             item.id,
                             item.title,
-                            item.description,
                             item.seriesNumber,
-                            item.publicationDate,
-                            item.publisherId,
                             item.publisher,
-                            // item.creators,
-                            // item.stock,
                             item.thumbnail,
-                            // item.images,
+                            this.onMiniComicClick,
                         )
                     ))
                 }
+                <div className="col-md-12">
+                    {comicRendered}
+                </div>
             </div>
         );
     }

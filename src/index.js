@@ -1,15 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom'
-import { Link, BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import './index.css';
 import ComicSuppliers from './ComicSuppliers'
 import ComicIssues from './ComicIssues'
-import {SupplierAddForm, SupplierEditForm} from "./forms";
+import {SupplierAddForm, SupplierEditForm} from "./Forms";
 import {
     APP_HOME, APP_ISSUES_URL, APP_SUPPLIERS_ADD_URL,
     APP_SUPPLIERS_EDIT_URL, APP_SUPPLIERS_URL
-} from "./constants";
+} from "./Constants";
 
 //<editor-fold desc="My fold area">
 const Main = () => (

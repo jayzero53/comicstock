@@ -8,20 +8,23 @@ import React from 'react';
 
 function Issue(props){
     return(
-        <div className="issue">
-            <h2>{props.id}</h2>
-            <h2>{props.title}</h2>
-            <h2>{props.publisher}</h2>
-            {/*<h2>{props.publisherId}</h2>*/}
-            {/*<h2>{props.seriesNumber}</h2>*/}
-            <h2>{props.publicationDate}</h2>
-            <h2>{props.description}</h2>
-            {/*<h2>{props.creators}</h2>*/}
-            {/*<h2>{props.stock}</h2>*/}
-            {/*<h2>{props.thumbnail.path}</h2>*/}
-            {/*<h2>{props.thumbnail.extension}</h2>*/}
-            <img className="comic_book_thumbnail" src={props.thumbnail.pathIncludingExtension} alt="thumbnail"/>
-            {/*<h2>{props.images}</h2>*/}
+        <div className="issue col-md-2" onClick={() => props.clickHandler(props.id)}>
+            <div>
+                <h3>{props.publisher}</h3>
+            </div>
+            <div>
+                <h2>{props.publicationDate}</h2>
+            </div>
+            <div>
+                <h2>{props.description}</h2>
+            </div>
+            <div>
+                <img className="comic_book_thumbnail" src={props.thumbnail.pathIncludingExtension} alt="thumbnail"/>
+            </div>
+
+            <div height="50px">
+                <strong>{props.title}</strong>
+            </div>
         </div>
     );
 }

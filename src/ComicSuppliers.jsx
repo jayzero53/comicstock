@@ -5,8 +5,8 @@ import Redirect from "react-router-dom/es/Redirect";
 
 import './index.css';
 import Supplier from './Supplier.jsx';
-import {API_SUPPLIERS_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL} from "./constants";
 import {getSuppliers} from "./ApiTools";
+import {API_SUPPLIERS_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL, PAGINATION_ITEMS_PER_PAGE} from "./Constants";
 
 
 class ComicSuppliers extends Component{
@@ -16,8 +16,17 @@ class ComicSuppliers extends Component{
         this.state = {
             suppliersList: [],
             searchCharacters: '',
+            currentPage: 1,
+            itemsPerPage: PAGINATION_ITEMS_PER_PAGE,
             editSupplierID: null,
         };
+        this.handlePageNumberClick = this.handlePageNumberClick.bind(this);
+    }
+
+    handlePageNumberClick(event) {
+        this.setState({
+            currentPage: Number(event.target.id)
+        });
     }
 
     componentDidMount(){
@@ -72,17 +81,13 @@ class ComicSuppliers extends Component{
     }
 
     render (){
-        console.log(this.state);
 
         if (this.state.editSupplierID)
         {
             let editURL = APP_SUPPLIERS_EDIT_URL + this.state.editSupplierID;
-            // TODO: Remove state transition from render (is anti-pattern)
-            this.setState({editSupplierID: null});
+            this.setState({editSupplierID: null}); // TODO: Remove state transition from render (is anti-pattern)
             return <Redirect to={editURL}/>;
         }
-
-        console.log(this.state.searchCharacters);
 
         let displayItems = this.state.suppliersList;
         let searchChars = this.state.searchCharacters;
@@ -96,6 +101,28 @@ class ComicSuppliers extends Component{
             );
         }
 
+        const currentPage = this.state.currentPage;
+        const itemsPerPage = this.state.itemsPerPage;
+
+        const indexOfLastSupplier = currentPage * itemsPerPage;
+        const indexOfFirstSupplier = indexOfLastSupplier - itemsPerPage;
+
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(displayItems.length / itemsPerPage); i++) {
+            pageNumbers.push(i);
+        }
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+                <li
+                    key={number}
+                    id={number}
+                    onClick={this.handlePageNumberClick}
+                >
+                    {number}
+                </li>
+            );
+        });
+
         return(
             <div>
                 <div className="row">
@@ -106,7 +133,7 @@ class ComicSuppliers extends Component{
                 </div>
                 <div className="row">
                     {
-                        displayItems.map((item, index) => (
+                        displayItems.slice(indexOfFirstSupplier, indexOfLastSupplier).map((item, index) => (
                             this.renderSupplier(
                                 index,
                                 item.id,
@@ -118,6 +145,11 @@ class ComicSuppliers extends Component{
                             )
                         ))
                     }
+                </div>
+                <div>
+                    <ul id="page-numbers">
+                        {renderPageNumbers}
+                    </ul>
                 </div>
             </div>
         );

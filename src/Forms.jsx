@@ -3,7 +3,7 @@ import axios from 'axios';
 import Redirect from "react-router-dom/es/Redirect";
 
 import './index.css';
-import {API_SUPPLIERS_URL, APP_SUPPLIERS_URL} from "./constants";
+import {API_SUPPLIERS_URL, APP_SUPPLIERS_URL} from "./Constants";
 import {getSuppliers} from "./ApiTools";
 
 
@@ -107,30 +107,24 @@ class SupplierEditForm extends SupplierAddForm{
         axios.get(
             requestURL
         )
-            .then(
-                //TODO: Only proceed if we found something
-                (response) => {
-
-                    console.log('All went well');
-                    console.log(response);
-                    console.log(response.data);
-
-                    this.state = {
-                        id: id,
-                        city: response.data.city,
-                        name: response.data.name,
-                        reference: response.data.reference,
-                        editComplete: false,
-                    };
-                    this.forceUpdate()
-                }
-            )
-            .catch(
-                (error) => {
-                    console.log('An error occurred');
-                    console.log(error)
-                }
-            );
+        .then(
+            (response) => {
+                this.state = {
+                    id: id,
+                    city: response.data.city,
+                    name: response.data.name,
+                    reference: response.data.reference,
+                    editComplete: false,
+                };
+                this.forceUpdate()
+            }
+        )
+        .catch(
+            (error) => {
+                console.log('An error occurred');
+                console.log(error)
+            }
+        );
 
         this.handleCityChange = this.handleCityChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -139,9 +133,6 @@ class SupplierEditForm extends SupplierAddForm{
     }
 
     handleSubmit(event) {
-        console.log('this ID: '+this.state.id);
-        event.preventDefault();
-        console.log('this ID: '+this.state.id);
         axios.put(
             API_SUPPLIERS_URL,
             {
@@ -151,16 +142,16 @@ class SupplierEditForm extends SupplierAddForm{
                 reference: this.state.reference,
             }
         )
-            .then(
-                (result) => {
-                    console.log(result.data);
-                }
-            )
-            .catch(
-                function (error) {
-                    console.log(error);
-                }
-            );
+        .then(
+            (result) => {
+                console.log(result.data);
+            }
+        )
+        .catch(
+            function (error) {
+                console.log(error);
+            }
+        );
         this.setState(
             {editComplete: true,}
         )

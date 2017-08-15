@@ -31,8 +31,7 @@ function Supplier(props){
                             (confirm('Delete this supplier?')
                             .then(
                                 (proceed) =>{props.deleteHandler(props.id)},
-                                (cancel) =>{ /*do nothing*/}
-
+                                (cancel) =>{/*do nothing*/}
                             ))
                         }}
                     />
