@@ -18,6 +18,23 @@ const APP_ISSUES_URL = APP_HOME + 'issues/';
 
 const PAGINATION_ITEMS_PER_PAGE = 6;
 
+const ISSUE_QUALITY_OPTIONS = [
+    'Mint',
+    'NearMintMint',
+    'NearMint',
+    'VeryFineNearMint',
+    'VeryFine',
+    'FineVeryFine',
+    'Fine',
+    'VeryGoodFine',
+    'VeryGood',
+    'GoodVeryGood',
+    'Good',
+    'FairGood',
+    'Fair',
+    'Poor'
+];
+
 export  {
     API_BASE_URL,
     API_SUPPLIERS_URL,
@@ -33,4 +50,5 @@ export  {
     APP_ISSUES_URL,
 
     PAGINATION_ITEMS_PER_PAGE,
+    ISSUE_QUALITY_OPTIONS,
 };

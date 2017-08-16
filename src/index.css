@@ -33,15 +33,18 @@ a span{
     width:100%;
     height:100%;
     top:0;
-    left: 0;
+    left:0;
 }
 
 .issue {
     font-size: 10px;
     font-style: normal;
-    background-color: #ffa869;
+    /*background-color: #1e2dff;*/
     height: 100%;
     display: inline-block;
+}
+.issue:hover {
+    background-color: #687eff;
 }
 
 .comic_book_thumbnail {
@@ -51,6 +54,10 @@ a span{
     max-width: 128px;
 }
 
+.big-comic{
+    max-width: 100%;
+    max-height: 100%;
+}
 
 .padded_by_ten{
     padding-left: 10px;
@@ -81,3 +88,9 @@ a span{
     user-select: none;
     cursor: pointer;
 }
+
+.blue-background{
+    background-color: deepskyblue;
+}
+
+

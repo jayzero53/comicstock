@@ -29,4 +29,30 @@ function Issue(props){
     );
 }
 
-export default Issue;
+function BigComic(props){
+
+    let images = [];
+    props.images.forEach(function(image){
+        images.push(image.pathIncludingExtension)
+    });
+
+    return(
+        <div>
+            <div className="col-md-5 big-comic">
+                {/* TODO: Cycle through these*/}
+                <img src={images}/>
+            </div>
+            <div className="col-md-7">
+                <div>{props.title}</div>
+                <div>{props.publisher}</div>
+                <div>{props.publicationDate}</div>
+                <div>{props.description}</div>
+            </div>
+        </div>
+    )
+}
+
+export {
+    Issue,
+    BigComic
+};

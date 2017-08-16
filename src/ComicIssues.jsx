@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import './index.css';
 
-import Issue from './Issue.jsx';
-import {getIssues} from "./ApiTools";
-
+import {Issue} from './Issue.jsx';
+import {getIssues, getSuppliers} from "./ApiTools";
+import {BigComic} from "./Issue";
+import Modal from "react-bootstrap/es/Modal";
+import {ISSUE_QUALITY_OPTIONS} from './Constants'
 
 class ComicIssues extends Component{
 
@@ -11,9 +13,10 @@ class ComicIssues extends Component{
         super();
         this.state = {
             issuesList: [],
+            suppliersList: [],
             selectedIssue: null,
+            buyNowClicked: false,
         };
-        // this.onMiniComicClick = this.onMiniComicClick.bind(this)
     }
 
     componentDidMount(){
@@ -21,6 +24,13 @@ class ComicIssues extends Component{
         .then(
             (issues) => {
                 this.setState({issuesList: issues})
+            }
+        );
+
+        getSuppliers()
+        .then(
+            (suppliers) => {
+                this.setState({suppliersList: suppliers})
             }
         )
     }
@@ -47,13 +57,26 @@ class ComicIssues extends Component{
         console.log(found)
     };
 
-    renderIssue(
+    renderLargeComic(comicID){
+        let comic =  this.returnComicWithID(comicID);
+        return (
+            <BigComic
+                key={comic.title}
+                title={comic.title}
+                images={comic.images}
+                publisher={comic.publisher}
+                publicationDate={comic.publicationDate}
+                description={comic.description}
+            />
+        );
+    }
+
+    renderComicPreview(
         id,
         title,
         seriesNumber,
         publisher,
         thumbnail,
-        clickhandler
     ){
         return (
             <Issue
@@ -67,40 +90,89 @@ class ComicIssues extends Component{
         );
     }
 
+    handleBuyNowClicked(comicID){
+        console.log('buying comic');
+        console.log(comicID);
+        this.setState({buyNowClicked: true})
+    }
+
+    handleBuyNowModalClosed(){
+        this.setState({buyNowClicked: false})
+    }
+
+    handleQuantityChange(event){
+        this.setState({})
+    }
+
+
     render (){
 
-        let comic, comicRendered;
+        let comic, comicRendered, htmlParts;
 
         if (this.state.selectedIssue){
             comic = this.returnComicWithID(this.state.selectedIssue);
-            console.log('comic')
-            console.log(comic)
-            comicRendered = this.renderIssue(
-                comic.id,
-                comic.title,
-                comic.seriesNumber,
-                comic.publisher,
-                comic.thumbnail,
-            );
+            comicRendered = this.renderLargeComic(comic.id);
+            htmlParts = (
+                <div>
+                    <div>
+                        {comicRendered}
+                    </div>
+
+                    <div>
+                        <Modal show={this.state.buyNowClicked} >
+                            <img className="comic_book_thumbnail" src={comic.thumbnail.pathIncludingExtension} alt="" />
+
+                            <p>How many?</p>
+                            <input type="number" min="1" onChange={this.handleQuantityChange.bind(this)}/>
+                            <p>Preferred quality?</p>
+                            <select>
+                                {
+                                    ISSUE_QUALITY_OPTIONS.map(
+                                        (qualityOption, _) => (
+                                            <option value={qualityOption}>{qualityOption}</option>
+                                        )
+                                    )
+                                }
+                            </select>
+                            <p>Supplier</p>
+                            <select>
+                                {
+                                    this.state.suppliersList.map(
+                                        (supplier, _)=>(
+                                            <option value={supplier.name}>{supplier.name}</option>
+                                        )
+                                    )
+                                }
+                            </select><br/>
+
+                            <button onClick={()=> this.handleBuyNowModalClosed()}>Place Order</button>
+                            <button onClick={()=> this.handleBuyNowModalClosed()}>Cancel</button>
+
+                        </Modal>
+
+                        <button className="col-md-6" onClick={() => this.handleBuyNowClicked(comic.id)}>
+                            Buy now
+                        </button>
+                    </div>
+                </div>)
             }
 
         return(
-            <div className="row">
+            <div className="row container">
+                <div>
                 {
                     this.state.issuesList.map((item, index) => (
-                        this.renderIssue(
+                        this.renderComicPreview(
                             item.id,
                             item.title,
                             item.seriesNumber,
                             item.publisher,
                             item.thumbnail,
-                            this.onMiniComicClick,
                         )
                     ))
                 }
-                <div className="col-md-12">
-                    {comicRendered}
                 </div>
+                {htmlParts}
             </div>
         );
     }
