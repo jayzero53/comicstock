@@ -7,7 +7,7 @@ import ComicSuppliers from './ComicSuppliers'
 import ComicIssues from './ComicIssues'
 import {SupplierAddForm, SupplierEditForm} from "./Forms";
 import {
-    APP_HOME, APP_ISSUES_URL, APP_SUPPLIERS_ADD_URL,
+    APP_HOME, APP_ISSUES_URL, APP_ORDERS_URL, APP_SUPPLIERS_ADD_URL,
     APP_SUPPLIERS_EDIT_URL, APP_SUPPLIERS_URL
 } from "./Constants";
 
@@ -54,6 +54,12 @@ const SuppliersEdit = () => (
     </Switch>
 );
 
+const Orders = () => (
+    <Switch>
+        <Route exact path={APP_ORDERS_URL} component={ComicSuppliers}/>
+    </Switch>
+);
+
 const Header = () => (
     <header>
         <nav className="navbar navbar-default">
@@ -61,7 +67,7 @@ const Header = () => (
                 <ul className="nav navbar-nav navbar-left">
                     <li><a href={APP_ISSUES_URL}>Issues</a></li>
                     <li><a href={APP_SUPPLIERS_URL}>Suppliers</a></li>
-                    <li><a href={APP_SUPPLIERS_URL}>Orders</a></li>
+                    <li><a href={APP_ORDERS_URL}>Orders</a></li>
                 </ul>
             </div>
         </nav>

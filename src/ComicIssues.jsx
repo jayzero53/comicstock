@@ -96,7 +96,9 @@ class ComicIssues extends Component{
         this.setState({buyNowClicked: true})
     }
 
-    handleBuyNowModalClosed(){
+    handleBuyNowModalClosed(event){
+        console.log('event.target');
+        console.log(event.target);
         this.setState({buyNowClicked: false})
     }
 
@@ -123,7 +125,7 @@ class ComicIssues extends Component{
                             <img className="comic_book_thumbnail" src={comic.thumbnail.pathIncludingExtension} alt="" />
 
                             <p>How many?</p>
-                            <input type="number" min="1" onChange={this.handleQuantityChange.bind(this)}/>
+                            <input type="number" defaultValue="1" min="1" onChange={this.handleQuantityChange.bind(this)}/>
                             <p>Preferred quality?</p>
                             <select>
                                 {
@@ -145,7 +147,7 @@ class ComicIssues extends Component{
                                 }
                             </select><br/>
 
-                            <button onClick={()=> this.handleBuyNowModalClosed()}>Place Order</button>
+                            <button onClick={(e)=> this.handleBuyNowModalClosed(e)}>Place Order</button>
                             <button onClick={()=> this.handleBuyNowModalClosed()}>Cancel</button>
 
                         </Modal>
