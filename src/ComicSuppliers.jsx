@@ -11,15 +11,15 @@ import {API_SUPPLIERS_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL, PAGINA
 
 class ComicSuppliers extends Component{
 
-    constructor(){
+    constructor(history){
         super();
         this.state = {
             suppliersList: [],
             searchCharacters: '',
             currentPage: 1,
             itemsPerPage: PAGINATION_ITEMS_PER_PAGE,
-            editSupplierID: null,
         };
+        this.history = history.history;
         this.handlePageNumberClick = this.handlePageNumberClick.bind(this);
     }
 
@@ -52,8 +52,8 @@ class ComicSuppliers extends Component{
     }
 
     editSupplier(supplierID){
-        // TODO: Use proper site navigation and remove hack
-        this.setState({editSupplierID: supplierID})
+        let editURL = APP_SUPPLIERS_EDIT_URL + supplierID;
+        this.history.push(editURL);
     }
 
     deleteSupplier(supplierID){
@@ -81,13 +81,6 @@ class ComicSuppliers extends Component{
     }
 
     render (){
-
-        if (this.state.editSupplierID)
-        {
-            let editURL = APP_SUPPLIERS_EDIT_URL + this.state.editSupplierID;
-            this.setState({editSupplierID: null}); // TODO: Remove state transition from render (is anti-pattern)
-            return <Redirect to={editURL}/>;
-        }
 
         let displayItems = this.state.suppliersList;
         let searchChars = this.state.searchCharacters;

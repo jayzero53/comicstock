@@ -10,8 +10,9 @@ import {
     APP_HOME, APP_ISSUES_URL, APP_ORDERS_URL, APP_SUPPLIERS_ADD_URL,
     APP_SUPPLIERS_EDIT_URL, APP_SUPPLIERS_URL
 } from "./Constants";
+import Link from "react-router-dom/es/Link";
+import Redirect from "react-router-dom/es/Redirect";
 
-//<editor-fold desc="My fold area">
 const Main = () => (
     <main>
         <Switch>
@@ -20,14 +21,13 @@ const Main = () => (
             <Route path={APP_SUPPLIERS_EDIT_URL + ':id'} component={SuppliersEdit}/>
             <Route path={APP_SUPPLIERS_ADD_URL} component={SuppliersAdd}/>
             <Route path={APP_SUPPLIERS_URL} component={Suppliers}/>
+            <Route path={APP_ORDERS_URL} component={Orders}/>
         </Switch>
     </main>
 );
 
 const Home = () => (
-    <div>
-        <h1>Click a link if you don't mind!</h1>
-    </div>
+    <Redirect to={APP_ISSUES_URL}/>
 );
 
 const Issues = () => (
@@ -56,20 +56,18 @@ const SuppliersEdit = () => (
 
 const Orders = () => (
     <Switch>
-        <Route exact path={APP_ORDERS_URL} component={ComicSuppliers}/>
+        <Route exact path={APP_ORDERS_URL} component={ComicSuppliers} history={this.history}/>
     </Switch>
 );
 
 const Header = () => (
     <header>
         <nav className="navbar navbar-default">
-            <div className="collapse navbar-collapse" id="navbar-collapse-1">
-                <ul className="nav navbar-nav navbar-left">
-                    <li><a href={APP_ISSUES_URL}>Issues</a></li>
-                    <li><a href={APP_SUPPLIERS_URL}>Suppliers</a></li>
-                    <li><a href={APP_ORDERS_URL}>Orders</a></li>
-                </ul>
-            </div>
+            <ul className="nav navbar-nav navbar-left">
+                <li><Link to={APP_ISSUES_URL}>Issues</Link></li>
+                <li><Link to={APP_SUPPLIERS_URL}>Suppliers</Link></li>
+                <li><Link to={APP_ORDERS_URL}>Orders</Link></li>
+            </ul>
         </nav>
     </header>
 );
@@ -86,5 +84,3 @@ render((
         <App />
     </BrowserRouter>
 ), document.getElementById('root'));
-
-//</editor-fold>

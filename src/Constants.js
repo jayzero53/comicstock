@@ -18,6 +18,7 @@ const APP_ISSUES_URL = APP_HOME + 'issues/';
 const APP_ORDERS_URL = APP_HOME + 'orders';
 
 const PAGINATION_ITEMS_PER_PAGE = 6;
+const MIN_ITEMS_PER_ORDER = 1;
 
 const ISSUE_QUALITY_OPTIONS = [
     'Mint',
@@ -50,7 +51,7 @@ export  {
 
     APP_ISSUES_URL,
     APP_ORDERS_URL,
-
+    MIN_ITEMS_PER_ORDER,
     PAGINATION_ITEMS_PER_PAGE,
     ISSUE_QUALITY_OPTIONS,
 };

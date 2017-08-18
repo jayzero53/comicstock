@@ -10,7 +10,7 @@ function fetchData(url){
             }
         )
         .catch(
-            function (error) {
+            (error) => {
                 console.log(error);
             }
         )
@@ -29,8 +29,27 @@ function getOrders(){
     return fetchData(API_ORDERS_URL)
 }
 
+function postToOrdersAPI(comicID, quality, supplierID){
+
+    let url = API_ORDERS_URL + supplierID + '/issues/' + comicID +'/Put';
+    return axios.put(url)
+        .then(
+            (response) =>{
+                console.log(response)
+            }
+        )
+        .catch(
+            (error) => {
+                console.log(error);
+            }
+        )
+}
+
+
 export {
     getSuppliers,
     getIssues,
     getOrders,
+    postToOrdersAPI,
 };
+
