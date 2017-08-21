@@ -57,19 +57,12 @@ class ComicIssues extends Component{
     }
 
     onMiniComicClick(comicID) {
-        console.log('comicID');
-        console.log(comicID);
-
         this.setState({
             selectedIssue: comicID,
         });
-
-        let found = this.returnComicWithID(comicID);
-        console.log('found');
-        console.log(found)
     };
 
-    renderLargeComic(comicID){
+    renderLargeComic(comicID, buyButtonHandler){
         let comic =  this.returnComicWithID(comicID);
         return (
             <BigComic
@@ -79,6 +72,7 @@ class ComicIssues extends Component{
                 publisher={comic.publisher}
                 publicationDate={comic.publicationDate}
                 description={comic.description}
+                buyButtonHandler={buyButtonHandler.bind(this)}
             />
         );
     }
@@ -106,10 +100,7 @@ class ComicIssues extends Component{
         this.setState({buyNowClicked: true})
     }
 
-    handleBuyNowModalClosed(event){
-        console.log('event.target');
-        console.log(event.target);
-
+    handleBuyNowModalClosed(){
         this.setState({
             buyNowClicked: false,
             comicOrder: {
@@ -125,7 +116,6 @@ class ComicIssues extends Component{
         let currentOrder = this.state.comicOrder;
         currentOrder.quantity = quantity;
         this.setState({comicOrder: currentOrder});
-        console.log(this.state.comicOrder)
     }
 
     handleOrderBeingPlaced(comicID){
@@ -133,7 +123,6 @@ class ComicIssues extends Component{
         currentOrder.comicID = comicID;
         currentOrder.quantity = currentOrder.quantity || MIN_ITEMS_PER_ORDER;
         this.setState({comicOrder: currentOrder});
-        console.log(this.state.comicOrder);
 
         currentOrder = this.state.comicOrder;
         for (let i=0; i<currentOrder.quantity;i++){
@@ -151,8 +140,6 @@ class ComicIssues extends Component{
     }
 
     handleSupplierSelected(event){
-        console.log('supplierID:');
-        console.log(event.target.value);
         let supplier = event.target.value;
         let currentOrder = this.state.comicOrder;
         currentOrder.supplierID = supplier;
@@ -160,9 +147,6 @@ class ComicIssues extends Component{
     }
 
     handleQualitySelected(event){
-        console.log('quality');
-        console.log(event.target.value);
-
         let quality = event.target.value;
         let currentOrder = this.state.comicOrder;
         currentOrder.quality = quality;
@@ -171,77 +155,72 @@ class ComicIssues extends Component{
 
     render (){
 
-        let comic, largeComicRendered, htmlParts;
+        let comic, largeComicRendered, largeComicDiv;
 
         if (this.state.selectedIssue){
             comic = this.returnComicWithID(this.state.selectedIssue);
-            largeComicRendered = this.renderLargeComic(comic.id);
-            htmlParts = (
-                <div>
-                    <div>
-                        {largeComicRendered}
-                    </div>
-
+            largeComicRendered = this.renderLargeComic(comic.id, this.handleBuyNowClicked);
+            largeComicDiv = (
+                <div className="col-md-12">
                     <div>
                         <Modal show={this.state.buyNowClicked}>
-                            <Modal.Header><h3>{comic.title}</h3></Modal.Header>
+                            <Modal.Header>
+                                <h3>{comic.title}</h3>
+                            </Modal.Header>
 
                             <Modal.Body>
                                 <div className="row">
                                     <div className="col-md-6">
-
-                                        <p>How many?</p>
-                                        <input onChange={this.handleQuantityChange.bind(this)} type="number" defaultValue={String(MIN_ITEMS_PER_ORDER)} min={String(MIN_ITEMS_PER_ORDER)}/>
-
-                                        <p>Preferred quality?</p>
+                                        <p>How many copies would you like?</p>
+                                        <input className="jose_theme" onChange={this.handleQuantityChange.bind(this)} type="number" defaultValue={String(MIN_ITEMS_PER_ORDER)} min={String(MIN_ITEMS_PER_ORDER)}/>
+                                        <hr />
+                                        <p>Please select your preferred quality</p>
                                         <select onChange={this.handleQualitySelected.bind(this)} required={true}>
-                                            <option selected disabled>Choose quality preference...</option>
+                                            <option selected disabled>Preferred quality...</option>
                                             {
                                                 ISSUE_QUALITY_OPTIONS.map(
                                                     (qualityOption, _) => (
-                                                        <option value={qualityOption}>{qualityOption}</option>
+                                                        <option className="jose_theme" value={qualityOption}>{qualityOption}</option>
                                                     )
                                                 )
                                             }
                                         </select>
-
-                                        <p>Supplier</p>
+                                        <hr />
+                                        <p>Please select your preferred supplier</p>
                                         <select onChange={this.handleSupplierSelected.bind(this)} required={true}>
-                                            <option selected disabled>Choose supplier...</option>
+                                            <option selected disabled>Preferred supplier...</option>
                                             {
                                                 this.state.suppliersList.map(
                                                     (supplier, _)=>(
-                                                        <option value={supplier.id}>{supplier.name}</option>
+                                                        <option className="jose_theme" value={supplier.id}>{supplier.name}</option>
                                                     )
                                                 )
                                             }
                                         </select>
-
-                                        <br/>
-
-                                        <button onClick={()=>this.handleOrderBeingPlaced.bind(this)(comic.id)}>Place Order</button>
-                                        <button onClick={(e)=> this.handleBuyNowModalClosed(e)}>Cancel</button>
+                                        <hr />
+                                        <button className="pull-right jose_theme" onClick={()=>this.handleOrderBeingPlaced.bind(this)(comic.id)}>Place Order</button>
+                                        <button className="pull-left jose_theme" onClick={()=> this.handleBuyNowModalClosed()}>Cancel</button>
                                     </div>
 
                                     <div className="col-md-6">
-                                        <img className="comic_book_thumbnail" src={comic.thumbnail.pathIncludingExtension} alt="" />
+                                        <img className="modal_order_thumbnail" src={comic.thumbnail.pathIncludingExtension} alt="" />
                                     </div>
 
                                 </div>
                             </Modal.Body>
 
                         </Modal>
+                    </div>
 
-                        <button className="col-md-1" onClick={() => this.handleBuyNowClicked(comic.id)}>
-                            Buy now
-                        </button>
+                    <div className="col-md-12">
+                        {largeComicRendered}
                     </div>
                 </div>)
             }
 
         return(
             <div>
-                <div className="row">
+                <div className="row jose_row">
                 {
                     this.state.issuesList.map((item, index) => (
                         this.renderComicPreview(
@@ -256,7 +235,7 @@ class ComicIssues extends Component{
                 </div>
 
                 <div className="row">
-                    {htmlParts}
+                    {largeComicDiv}
                 </div>
             </div>
         );

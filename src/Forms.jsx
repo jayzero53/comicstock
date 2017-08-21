@@ -88,7 +88,7 @@ class SupplierAddForm extends Component{
                     <input type="text" className="form-control" placeholder={this.state.reference || "Reference"} value={this.state.reference} onChange={this.handleReferenceChange} />
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary jose_theme">Submit</button>
                 </div>
             </form>
         );

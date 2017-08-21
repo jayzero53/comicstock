@@ -8,8 +8,24 @@ ol, ul {
 }
 
 .supplier {
+    text-align: center;
     font-style: normal;
-    background-color: cyan;
+    /*border: 2px solid #494949;*/
+    /*border-right-color: #000;*/
+    /*border-left-color: #000;*/
+    display: inline-block;
+}
+
+.gradient-border {
+    border-radius: 5px;
+    border-top: 2px solid #fffdfc;
+    border-bottom:2px solid #bcb0b7;
+    background-image:
+            linear-gradient(#fffdfc, #bcb0b7),
+            linear-gradient(#fffdfc, #bcb0b7);
+    background-size: 2px 100%;
+    background-position:0 0, 100% 0;
+    background-repeat:no-repeat;
 }
 
 #green-background{
@@ -39,12 +55,13 @@ a span{
 .issue {
     font-size: 10px;
     font-style: normal;
-    /*background-color: #1e2dff;*/
     height: 100%;
     display: inline-block;
 }
 .issue:hover {
-    background-color: #687eff;
+    border-color: darkkhaki;
+    border: 10px solid red;
+    border-width: thin;
 }
 
 .comic_book_thumbnail {
@@ -52,6 +69,13 @@ a span{
     height: 128px;
     max-height: 128px;
     max-width: 128px;
+}
+
+.modal_order_thumbnail{
+    width: 256px;
+    height: 256px;
+    max-height: 256px;
+    max-width: 256px;
 }
 
 .big-comic{
@@ -71,8 +95,6 @@ a span{
 .button_icon{
     width: 64px;
     height: 40px;
-    /*max-height: 40px;*/
-    /*max-width: 40px;*/
     max-height: none;
     max-width: none;
 }
@@ -84,13 +106,57 @@ a span{
 
 #page-numbers > li {
     margin-right: 0.3em;
-    color: blue;
+    color: #000024;
     user-select: none;
     cursor: pointer;
 }
 
-.blue-background{
-    background-color: deepskyblue;
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus
+{
+    background-color: #d0e5ec;
+    color: #010101;
 }
 
+.jose_theme {
+    background: #ffffff;
+    background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -ms-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+    background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #777;
+    padding: 6px;
+    border: solid #e6e6e6 1px;
+    text-decoration: none;
+}
 
+.jose_theme:hover {
+    background: #d0e5ec;
+    text-decoration: none;
+    color: black;
+}
+
+.comic-background {
+    background: url('images/7.jpg');
+}
+
+.jose_row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.orders_api_dont_work {
+    margin: 20px;
+    width: 100px;
+    height: 100px;
+    background: #f00;
+    -webkit-animation: spin 4s infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0%  {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
+}

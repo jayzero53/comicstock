@@ -13,7 +13,8 @@ import {
 import Link from "react-router-dom/es/Link";
 import Redirect from "react-router-dom/es/Redirect";
 
-const Main = () => (
+
+const MainSection = () => (
     <main>
         <Switch>
             <Route exact path={APP_HOME} component={Home}/>
@@ -38,7 +39,7 @@ const Issues = () => (
 
 const Suppliers = () => (
     <Switch>
-        <Route exact path={APP_SUPPLIERS_URL} component={ComicSuppliers}/>
+        <Route exact path={APP_SUPPLIERS_URL} component={ComicSuppliers} history={this.history}/>
     </Switch>
 );
 
@@ -60,7 +61,7 @@ const Orders = () => (
     </Switch>
 );
 
-const Header = () => (
+const TopBar = () => (
     <header>
         <nav className="navbar navbar-default">
             <ul className="nav navbar-nav navbar-left">
@@ -73,9 +74,9 @@ const Header = () => (
 );
 
 const App = () => (
-    <div>
-        <Header />
-        <Main />
+    <div className="comic-background">
+        <TopBar />
+        <MainSection />
     </div>
 );
 

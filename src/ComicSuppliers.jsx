@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-import Redirect from "react-router-dom/es/Redirect";
 
 import './index.css';
 import Supplier from './Supplier.jsx';
@@ -11,7 +9,7 @@ import {API_SUPPLIERS_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL, PAGINA
 
 class ComicSuppliers extends Component{
 
-    constructor(history){
+    constructor(props){
         super();
         this.state = {
             suppliersList: [],
@@ -19,7 +17,7 @@ class ComicSuppliers extends Component{
             currentPage: 1,
             itemsPerPage: PAGINATION_ITEMS_PER_PAGE,
         };
-        this.history = history.history;
+        this.history = props.history;
         this.handlePageNumberClick = this.handlePageNumberClick.bind(this);
     }
 
@@ -80,6 +78,10 @@ class ComicSuppliers extends Component{
         )
     }
 
+    handleAddClicked(){
+        this.history.push(APP_SUPPLIERS_ADD_URL)
+    }
+
     render (){
 
         let displayItems = this.state.suppliersList;
@@ -119,12 +121,14 @@ class ComicSuppliers extends Component{
         return(
             <div>
                 <div className="row">
-                    <Link to={APP_SUPPLIERS_ADD_URL}>Add new</Link>
+                    <div className="col-md-6">
+                        <button className="jose_theme" onClick={this.handleAddClicked.bind(this)}>Add new</button>
+                    </div>
+                    <div className="col-md-3 pull-right">
+                        <input type="text" className="form-control" placeholder={"Search"} onChange={this.handleSearchChange.bind(this)}/>
+                    </div>
                 </div>
-                <div className="row">
-                    <input type="text" className="form-control" placeholder={"Search"} onChange={this.handleSearchChange.bind(this)}/>
-                </div>
-                <div className="row">
+                <div className="row jose_row">
                     {
                         displayItems.slice(indexOfFirstSupplier, indexOfLastSupplier).map((item, index) => (
                             this.renderSupplier(

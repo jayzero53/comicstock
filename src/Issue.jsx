@@ -3,7 +3,7 @@ Issue module
 */
 
 import './index.css';
-
+import {Carousel} from 'react-bootstrap'
 import React from 'react';
 
 function Issue(props){
@@ -27,12 +27,22 @@ function BigComic(props){
     });
     let date = new Date(props.publicationDate);
 
+    let large_comic_image = (<img src={images} alt="" />);
+    if (images.length > 1)
+        large_comic_image = (
+            <Carousel>
+                {
+                    images.map((image) =>
+                        <Carousel.Item>
+                            <img src={image} alt="" />
+                        </Carousel.Item>
+                    )
+                }
+            </Carousel>
+        );
+
     return(
         <div>
-            <div className="col-md-5 big-comic">
-                {/* TODO: Cycle through these*/}
-                <img src={images}/>
-            </div>
             <div className="col-md-7">
                 <div>
                     <h3><strong>{props.title}</strong></h3>
@@ -43,12 +53,22 @@ function BigComic(props){
                 </div>
                 <hr/>
                 <div>
-                    Published: {date.toLocaleDateString('en-GB', {day : 'numeric', month : 'long', year : 'numeric'})}
+                    <h2>Published: {date.toLocaleDateString('en-GB', {day : 'numeric', month : 'long', year : 'numeric'})}</h2>
                 </div>
                 <hr/>
                 <div>
-                    {props.description}
+                    <strong>{props.description}</strong>
                 </div>
+
+                <br />
+
+                <button className="col-md-3 jose_theme" onClick={() => props.buyButtonHandler(props.id)}>
+                    Buy now
+                </button>
+            </div>
+
+            <div className="col-md-5 big-comic">
+                {large_comic_image}
             </div>
         </div>
     )
