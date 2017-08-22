@@ -5,9 +5,12 @@ import {Issue} from './Issue.jsx';
 import {getIssues, getSuppliers, postToOrdersAPI} from "./ApiTools";
 import {BigComic} from "./Issue";
 import {Modal} from "react-bootstrap";
-import {ISSUE_QUALITY_OPTIONS, MIN_ITEMS_PER_ORDER} from './Constants'
+import {ALERT_OPTIONS, ISSUE_QUALITY_OPTIONS, MIN_ITEMS_PER_ORDER} from './Constants'
+import AlertContainer from "react-alert";
+
 
 class ComicIssues extends Component{
+
 
     constructor(){
         super();
@@ -25,6 +28,16 @@ class ComicIssues extends Component{
             }
 
         };
+    }
+
+    showAlert(alertText, type){
+        // Needed function for AlertContainer to function properly
+        this.msg.show(
+            alertText, {
+                time: 2000,
+                type: type,
+            }
+        )
     }
 
     componentDidMount(){
@@ -54,6 +67,11 @@ class ComicIssues extends Component{
 
     orderComic(comicID, quality, supplierID){
         postToOrdersAPI(comicID, quality, supplierID)
+        .then((response) =>{
+            let response_class =  response.response && response.response.request.status > 200 ? 'error': 'success';
+            let response_text = response_class === 'error' ? String(response.response.statusText) : String(response.statusText);
+            this.showAlert(response_text, response_class)
+        });
     }
 
     onMiniComicClick(comicID) {
@@ -153,9 +171,20 @@ class ComicIssues extends Component{
         this.setState({comicOrder: currentOrder});
     }
 
+    checkPurchaseInfoComplete(){
+        // returns true if quantity is null (which will be defaulted to 1) or 1 or more AND
+        // both, supplier and quality, has been specified
+        if ((this.state.comicOrder.supplierID === null) || (this.state.comicOrder.quality === null))
+            {return false}
+        if (this.state.comicOrder.quantity === '-' || this.state.comicOrder.quantity === '+')
+            return false;
+        return !((this.state.comicOrder.quantity !== null) && (this.state.comicOrder.quantity < 1 ));
+    }
+
     render (){
 
         let comic, largeComicRendered, largeComicDiv;
+        const purchaseInfoComplete = this.checkPurchaseInfoComplete();
 
         if (this.state.selectedIssue){
             comic = this.returnComicWithID(this.state.selectedIssue);
@@ -163,6 +192,7 @@ class ComicIssues extends Component{
             largeComicDiv = (
                 <div className="col-md-12">
                     <div>
+                        <AlertContainer ref={a => this.msg = a} {...ALERT_OPTIONS} />
                         <Modal show={this.state.buyNowClicked}>
                             <Modal.Header>
                                 <h3>{comic.title}</h3>
@@ -198,8 +228,9 @@ class ComicIssues extends Component{
                                             }
                                         </select>
                                         <hr />
-                                        <button className="pull-right jose_theme" onClick={()=>this.handleOrderBeingPlaced.bind(this)(comic.id)}>Place Order</button>
+                                        <button className="pull-right jose_theme" disabled={!purchaseInfoComplete} onClick={()=>this.handleOrderBeingPlaced.bind(this)(comic.id)}>Place Order</button>
                                         <button className="pull-left jose_theme" onClick={()=> this.handleBuyNowModalClosed()}>Cancel</button>
+
                                     </div>
 
                                     <div className="col-md-6">

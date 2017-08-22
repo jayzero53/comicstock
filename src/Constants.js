@@ -37,6 +37,14 @@ const ISSUE_QUALITY_OPTIONS = [
     'Poor'
 ];
 
+const ALERT_OPTIONS = {
+    offset: 14,
+    position: 'top right',
+    theme: 'dark',
+    time: 5000,
+    transition: 'scale'
+};
+
 export  {
     API_BASE_URL,
     API_SUPPLIERS_URL,
@@ -54,4 +62,6 @@ export  {
     MIN_ITEMS_PER_ORDER,
     PAGINATION_ITEMS_PER_PAGE,
     ISSUE_QUALITY_OPTIONS,
+
+    ALERT_OPTIONS,
 };

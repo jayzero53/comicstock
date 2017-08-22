@@ -139,6 +139,13 @@ a span{
     color: black;
 }
 
+.jose_theme:disabled,
+.jose_theme[disabled]{
+    border: 1px solid #999999;
+    background: #9a9a9a;
+    color: #454545;
+}
+
 .comic-background {
     background: url('images/7.jpg');
 }

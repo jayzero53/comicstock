@@ -57,7 +57,7 @@ const SuppliersEdit = () => (
 
 const Orders = () => (
     <Switch>
-        <Route exact path={APP_ORDERS_URL} component={ComicSuppliers} history={this.history}/>
+        <Route exact path={APP_ORDERS_URL} component={ComicSuppliers} history={this.history} />
     </Switch>
 );
 

@@ -4,7 +4,10 @@ import axios from 'axios';
 import './index.css';
 import Supplier from './Supplier.jsx';
 import {getSuppliers} from "./ApiTools";
-import {API_SUPPLIERS_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL, PAGINATION_ITEMS_PER_PAGE} from "./Constants";
+import {
+    API_SUPPLIERS_URL, APP_SUPPLIERS_ADD_URL, APP_SUPPLIERS_EDIT_URL,
+    PAGINATION_ITEMS_PER_PAGE
+} from "./Constants";
 
 
 class ComicSuppliers extends Component{
@@ -49,6 +52,10 @@ class ComicSuppliers extends Component{
         );
     }
 
+    handleAddClicked(){
+        this.history.push(APP_SUPPLIERS_ADD_URL)
+    }
+
     editSupplier(supplierID){
         let editURL = APP_SUPPLIERS_EDIT_URL + supplierID;
         this.history.push(editURL);
@@ -76,10 +83,6 @@ class ComicSuppliers extends Component{
         this.setState(
             {searchCharacters: event.target.value}
         )
-    }
-
-    handleAddClicked(){
-        this.history.push(APP_SUPPLIERS_ADD_URL)
     }
 
     render (){

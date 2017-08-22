@@ -10,9 +10,9 @@
     "gh-pages": "^1.0.0",
     "prop-types": "latest",
     "react": "^15.6.1",
+    "react-alert": "^2.2.0",
     "react-bootstrap": "^0.31.2",
     "react-confirm": "^0.1.14",
-    "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2",
     "react-scripts": "1.0.10"
   },
@@ -23,5 +23,9 @@
     "deploy": "gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1"
   }
 }
