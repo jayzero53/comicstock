@@ -147,7 +147,7 @@ a span{
 }
 
 .comic-background {
-    background: url('images/7.jpg');
+    background: url('images/12.png');
 }
 
 .jose_row{
@@ -166,4 +166,9 @@ a span{
 @-webkit-keyframes spin {
     0%  {-webkit-transform: rotate(0deg);}
     100% {-webkit-transform: rotate(360deg);}
+}
+
+.five-forty-p{
+    height: 960px;
+    width: 540px;
 }
