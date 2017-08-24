@@ -56,6 +56,7 @@ const Orders = () =>
 const MainSection = () =>
   <main>
     <Switch>
+      <Route exact path="/" component={Home} />
       <Route exact path={APP_HOME} component={Home} />
       <Route path={APP_ISSUES_URL} component={Issues} />
       <Route path={`${APP_SUPPLIERS_EDIT_URL}:id`} component={SuppliersEdit} />
