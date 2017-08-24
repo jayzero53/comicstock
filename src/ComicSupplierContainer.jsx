@@ -101,13 +101,8 @@ class ComicSuppliersContainer extends Component {
       pageNumbers.push(i);
     }
     const renderPageNumbers = pageNumbers.map(number =>
-      <li key={number} id={number}>
-        <button
-          className="no-button-theme"
-          onClick={this.handlePageNumberClick}
-        >
-          {number}
-        </button>
+      <li key={number} id={number} onClick={this.handlePageNumberClick}>
+        {number}
       </li>,
     );
 
