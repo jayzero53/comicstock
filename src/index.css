@@ -172,3 +172,9 @@ a span{
     height: 960px;
     width: 540px;
 }
+
+.no-button-theme{
+    border: none;
+    background: none;
+    outline: none;
+}

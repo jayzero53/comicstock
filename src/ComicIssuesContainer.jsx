@@ -34,6 +34,7 @@ class ComicIssuesContainer extends Component {
     this.handleSupplierSelected = this.handleSupplierSelected.bind(this);
     this.checkPurchaseInfoComplete = this.checkPurchaseInfoComplete.bind(this);
     this.orderComic = this.orderComic.bind(this);
+    this.handleBuyNowModalClosed = this.handleBuyNowModalClosed.bind(this);
   }
 
   componentDidMount() {
@@ -214,7 +215,11 @@ class ComicIssuesContainer extends Component {
               }}
               {...ALERT_OPTIONS}
             />
-            <Modal show={this.state.buyNowClicked}>
+            <Modal
+              show={this.state.buyNowClicked}
+              onRequestClose={this.handleBuyNowModalClosed}
+              onHide={this.handleBuyNowModalClosed}
+            >
               <Modal.Header>
                 <h3>
                   {comic.title}

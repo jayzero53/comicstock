@@ -21,16 +21,19 @@ function Supplier(props) {
         {props.reference}
         <br />
         <div className="text-right">
-          <img
-            className="padded_by_ten button_icon"
-            src={editIcon}
-            alt="edit"
+          <button
+            className="no-button-theme"
             onClick={() => props.editHandler(props.id)}
-          />
-          <img
-            className="padded_by_ten button_icon"
-            src={deleteIcon}
-            alt="delete"
+          >
+            <img
+              className="padded_by_ten button_icon"
+              src={editIcon}
+              alt="edit"
+            />
+          </button>
+
+          <button
+            className="no-button-theme"
             onClick={() => {
               confirm('Delete this supplier?').then(
                 () => {
@@ -42,7 +45,13 @@ function Supplier(props) {
                 },
               );
             }}
-          />
+          >
+            <img
+              className="padded_by_ten button_icon"
+              src={deleteIcon}
+              alt="delete"
+            />
+          </button>
         </div>
       </address>
     </div>

@@ -13,6 +13,7 @@ function Issue(props) {
       className="issue col-md-2"
       onClick={() => props.clickHandler(props.id)}
       role="button"
+      tabIndex="0"
     >
       <div>
         <img
