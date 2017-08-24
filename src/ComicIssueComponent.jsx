@@ -3,6 +3,7 @@ Issue module
 */
 import { Carousel } from 'react-bootstrap';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './index.css';
 
@@ -30,6 +31,13 @@ function Issue(props) {
     </div>
   );
 }
+
+Issue.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  clickHandler: PropTypes.func.isRequired,
+};
 
 function BigComic(props) {
   const images = [];
@@ -106,5 +114,19 @@ function BigComic(props) {
     </div>
   );
 }
+
+BigComic.propTypes = {
+  id: PropTypes.number.isRequired,
+  images: PropTypes.arrayOf(PropTypes.any),
+  publicationDate: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  publisher: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  buyButtonHandler: PropTypes.func.isRequired,
+};
+
+BigComic.defaultProps = {
+  images: [],
+};
 
 export { Issue, BigComic };
