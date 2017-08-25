@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 import { Redirect, BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import './index.css';
-import ComicSuppliers from './ComicSupplierContainer';
-import ComicIssues from './ComicIssuesContainer';
-import ComicOrderComponent from './ComicOrdersContainer';
-import { SupplierAddForm, SupplierEditForm } from './Forms';
+import ComicSuppliers from './Containers/Suppliers';
+import ComicIssues from './Containers/Issues';
+import ComicOrderComponent from './Components/Order';
+import { SupplierAddForm, SupplierEditForm } from './Utils/Forms';
 import {
   APP_HOME,
   APP_ISSUES_URL,
@@ -14,7 +14,7 @@ import {
   APP_SUPPLIERS_ADD_URL,
   APP_SUPPLIERS_EDIT_URL,
   APP_SUPPLIERS_URL,
-} from './Constants';
+} from './Utils/Constants';
 
 const Home = () => <Redirect to={APP_ISSUES_URL} />;
 

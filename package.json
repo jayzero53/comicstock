@@ -6,7 +6,6 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
-    "chai": "^4.1.1",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-css-modules": "^2.7.5",
     "eslint-plugin-prettier": "^2.2.0",
@@ -30,6 +29,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "chai": "^4.1.1",
     "enzyme": "^2.9.1",
     "eslint": "^4.5.0",
     "prettier": "^1.5.3",

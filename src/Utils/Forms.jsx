@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Redirect from 'react-router-dom/es/Redirect';
+import {ControlLabel} from 'react-bootstrap';
 
-import './index.css';
+import '../index.css';
 import { API_SUPPLIERS_URL, APP_SUPPLIERS_URL } from './Constants';
 import { getSuppliers } from './ApiTools';
 
@@ -66,7 +67,7 @@ class SupplierAddForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <label htmlFor="supplierForm">City</label>
+          <ControlLabel>City</ControlLabel>
           <br />
           <br />
           <input
@@ -78,7 +79,7 @@ class SupplierAddForm extends Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="supplierForm">Name</label>
+          <ControlLabel>Name</ControlLabel>
           <br />
           <br />
           <input
@@ -90,7 +91,7 @@ class SupplierAddForm extends Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="supplierForm">Reference</label>
+          <ControlLabel>Reference</ControlLabel>
           <br />
           <br />
           <input

@@ -5,7 +5,7 @@ import { Carousel } from 'react-bootstrap';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './index.css';
+import '../index.css';
 
 function Issue(props) {
   return (
@@ -34,10 +34,17 @@ function Issue(props) {
 }
 
 Issue.propTypes = {
-  id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  clickHandler: PropTypes.func.isRequired,
+  id: PropTypes.number,
+  title: PropTypes.string,
+  thumbnail: PropTypes.objectOf(PropTypes.any),
+  clickHandler: PropTypes.func,
+};
+
+Issue.defaultProps = {
+  id: 0,
+  title: '',
+  thumbnail: { pathIncludingExtension: '' },
+  clickHandler: () => {},
 };
 
 function BigComic(props) {
@@ -117,17 +124,23 @@ function BigComic(props) {
 }
 
 BigComic.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.number,
   images: PropTypes.arrayOf(PropTypes.any),
-  publicationDate: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  publisher: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  buyButtonHandler: PropTypes.func.isRequired,
+  publicationDate: PropTypes.string,
+  title: PropTypes.string,
+  publisher: PropTypes.string,
+  description: PropTypes.string,
+  buyButtonHandler: PropTypes.func,
 };
 
 BigComic.defaultProps = {
   images: [],
+  id: 0,
+  publicationDate: '',
+  title: '',
+  publisher: '',
+  description: '',
+  buyButtonHandler: () => {},
 };
 
 export { Issue, BigComic };

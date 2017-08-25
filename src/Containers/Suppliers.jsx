@@ -3,15 +3,15 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { BrowserRouter } from 'react-router-dom';
 
-import './index.css';
-import Supplier from './ComicSupplierComponent';
-import { getSuppliers } from './ApiTools';
+import '../index.css';
+import Supplier from '../Components/Supplier';
+import { getSuppliers } from '../Utils/ApiTools';
 import {
   API_SUPPLIERS_URL,
   APP_SUPPLIERS_ADD_URL,
   APP_SUPPLIERS_EDIT_URL,
   PAGINATION_ITEMS_PER_PAGE,
-} from './Constants';
+} from '../Utils/Constants';
 
 class ComicSuppliersContainer extends Component {
   constructor(props) {

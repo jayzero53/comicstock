@@ -1,15 +1,15 @@
 import AlertContainer from 'react-alert';
 import { Modal } from 'react-bootstrap';
 import React, { Component } from 'react';
-import './index.css';
+import '../index.css';
 
-import { BigComic, Issue } from './ComicIssueComponent';
-import { getIssues, getSuppliers, postToOrdersAPI } from './ApiTools';
+import { BigComic, Issue } from '../Components/Issue';
+import { getIssues, getSuppliers, postToOrdersAPI } from '../Utils/ApiTools';
 import {
   ALERT_OPTIONS,
   ISSUE_QUALITY_OPTIONS,
   MIN_ITEMS_PER_ORDER,
-} from './Constants';
+} from '../Utils/Constants';
 
 class ComicIssuesContainer extends Component {
   constructor() {
@@ -234,6 +234,7 @@ class ComicIssuesContainer extends Component {
                       className="jose_theme"
                       onChange={this.handleQuantityChange}
                       type="number"
+                      step="1"
                       defaultValue={String(MIN_ITEMS_PER_ORDER)}
                       min={String(MIN_ITEMS_PER_ORDER)}
                     />
