@@ -3,7 +3,7 @@ import expect from 'chai';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import { BigComic, Issue } from './Issue';
+import { Issue } from './Issue';
 
 // eslint-disable-next-line no-undef
 // it('Issue renders without crashing', () => {
@@ -12,9 +12,9 @@ import { BigComic, Issue } from './Issue';
 // });
 
 // eslint-disable-next-line no-undef
-it('Issue with no images', () => {
-  const wrapper = shallow(<Issue thumbnail={{ pathIncludingExtension: '' }} />);
-  expect(wrapper.find(<img alt="thumbnail" />)).to.have.length(1);
+it('Issue with no supplied images, still yields an img tag', () => {
+  const issue = shallow(<Issue thumbnail={{ pathIncludingExtension: '' }} />);
+  expect(issue.find(<img alt="thumbnail" />)).to.have.length(1);
 });
 
 // eslint-disable-next-line no-undef

@@ -22,7 +22,7 @@ function Issue(props) {
           alt="thumbnail"
         />
       </div>
-      <div height="50px">
+      <div>
         <h4>
           <strong>
             {props.title}
