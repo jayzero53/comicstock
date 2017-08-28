@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://frontendshowcase.azurewebsites.net/api/';
+const API_BASE_URL = 'https://frontendshowcase.azurewebsites.net/api/';
 
 const API_SUPPLIERS_ENDPOINT = 'Suppliers/';
 const API_ISSUES_ENDPOINT = 'Issues/';
